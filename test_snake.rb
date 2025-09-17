@@ -11,4 +11,4 @@ b.draw(s)               # <-- draw the grid with the snake
 
 s.move
 puts "\nAfter one move:"
-b.draw(s)
+b.draw(s, food)

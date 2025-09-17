@@ -6,7 +6,7 @@ def initialize (width, height)
     @height = height 
 end 
 
-def draw(snake, food )
+def draw(snake, food = nil )
     (0...height).each do |y|
         row= (0...width).map do |x|
             if snake.segments.include?([x,y])

@@ -1,0 +1,40 @@
+body{
+    display:flex; 
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
+    margin: 0; 
+    background: #222;
+    color: #fff;
+    font-family: sans-serif; 
+}
+
+h1{
+   position: absolute;
+   top: 20px; 
+}
+ #game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+ }
+
+#score {
+    margin-bottom: 10px;
+    font-size: 18px; 
+}
+
+canvas {
+    background: #222;
+    border: 2px solid white
+}
+
+button{
+    background: blue;
+    align-items: center;
+    color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+
+}
