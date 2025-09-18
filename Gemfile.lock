@@ -1,0 +1,11 @@
+GEM
+  specs:
+
+PLATFORMS
+  arm64-darwin-24
+  ruby
+
+DEPENDENCIES
+
+BUNDLED WITH
+   2.7.2
