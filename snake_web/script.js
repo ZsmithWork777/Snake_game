@@ -1,14 +1,5 @@
-// ===== CANVAS SETUP =====
 const canvas = document.getElementById("board");
 const ctx = canvas.getContext("2d");
-
-// ===== GAME STATE =====
-let snake;        // array of body segments
-let dx;           // horizontal movement speed
-let dy;           // vertical movement speed
-let food;         // current food location
-let score;        // player score
-let game;         // reference to the game loop interval
 
 // ===== GRID =====
 function drawGrid() {
@@ -18,7 +9,7 @@ function drawGrid() {
   const cellSize = 20;
   ctx.strokeStyle = "#333";
 
-  // vertical lines
+  // vertical
   for (let x = 0; x <= canvas.width; x += cellSize) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
@@ -26,7 +17,7 @@ function drawGrid() {
     ctx.stroke();
   }
 
-  // horizontal lines
+  // horizontal
   for (let y = 0; y <= canvas.height; y += cellSize) {
     ctx.beginPath();
     ctx.moveTo(0, y);
@@ -34,6 +25,18 @@ function drawGrid() {
     ctx.stroke();
   }
 }
+
+// ===== SNAKE DATA =====
+let snake = [
+  { x: 80, y: 40 },
+  { x: 60, y: 40 },
+  { x: 40, y: 40 }
+];
+
+let dx = 20; // moving right initially
+let dy = 0;
+let food = randomFood();
+let score = 0;
 
 // ===== FOOD =====
 function randomFood() {
@@ -50,33 +53,34 @@ function drawFood() {
 
 // ===== SNAKE =====
 function drawSnake() {
-  ctx.fillStyle = "#0f0"; // green
+  ctx.fillStyle = "#0f0";
   snake.forEach(part => ctx.fillRect(part.x, part.y, 20, 20));
 }
 
+// ===== MOVE =====
 function advanceSnake() {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-  // ==== collision check (walls or self) ====
+  // collision
   if (
     head.x < 0 || head.x >= canvas.width ||
     head.y < 0 || head.y >= canvas.height ||
     snake.slice(1).some(p => p.x === head.x && p.y === head.y)
   ) {
-    clearInterval(game); // stop game loop
+    clearInterval(game);
     alert(`Game Over! Score: ${score}`);
     return;
   }
 
-  // ==== food check ====
+  // eat food
   if (head.x === food.x && head.y === food.y) {
-    snake.unshift(head); // add new head without removing tail
+    snake.unshift(head);
     score += 10;
     document.getElementById("score").textContent = `Score: ${score}`;
-    food = randomFood(); // new food
+    food = randomFood();
   } else {
     snake.unshift(head);
-    snake.pop(); // remove tail
+    snake.pop();
   }
 }
 
@@ -86,7 +90,6 @@ document.addEventListener("keydown", changeDirection);
 function changeDirection(e) {
   const LEFT = 37, UP = 38, RIGHT = 39, DOWN = 40;
 
-  // Prevent reverse movement
   if (e.keyCode === LEFT && dx === 0) {
     dx = -20; dy = 0;
   } else if (e.keyCode === UP && dy === 0) {
@@ -98,7 +101,7 @@ function changeDirection(e) {
   }
 }
 
-// ===== GAME LOOP =====
+// ===== LOOP =====
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid();
@@ -107,28 +110,55 @@ function gameLoop() {
   drawSnake();
 }
 
-// ===== RESET / START GAME =====
+// Reset 
 function resetGame() {
-  clearInterval(game); // stop old game if running
+    clearInterval(game);
 
-  // reset snake, direction, score, food
-  snake = [
-    { x: 80, y: 40 },
-    { x: 60, y: 40 },
-    { x: 40, y: 40 }
-  ];
-  dx = 20;   // start moving right
-  dy = 0;
-  score = 0;
-  document.getElementById("score").textContent = `Score: ${score}`;
-  food = randomFood();
+    // reset snake, direction, score, food
+    snake = [
+  { x: 80, y: 40 },
+  { x: 60, y: 40 },
+  { x: 40, y: 40 }
+    ];
+    dx = 20;
+    dy = 0; 
+    score = 0; 
+    DocumentFragment.getElementById("score").textContent = 'score: ${score}'; 
+    food = randomFood(); 
 
-  // start new loop
-  game = setInterval(gameLoop, 150);
+    // restart loop 
+    game = setInterval(gameLoop, 150)        
+    
 }
 
-// ===== EVENT: Restart Button =====
+
+const game = setInterval(gameLoop, 150);
+
+// hook the button 
 document.getElementById("RestartBtn").addEventListener("click", resetGame);
 
-// ===== INITIAL GAME START =====
-resetGame();
+
+
+
+document.getElementById("QuoteBtn").addEventListener("click", () => {
+  fetch("/quote")
+    .then(res => res.text())
+    .then(html => {
+      // Parse the HTML returned by /quote
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      // Grab the new quote box from the parsed HTML
+      const newQuote = doc.querySelector(".quote-box");
+      if (!newQuote) return; // if no quote found, stop
+
+      // Find existing quote element (if any)
+      const existingQuote = document.querySelector(".quote-box");
+      if (existingQuote) {
+        existingQuote.replaceWith(newQuote);
+      } else {
+        document.body.appendChild(newQuote);
+      }
+    })
+    .catch(err => console.error("Error fetching quote:", err));
+});
