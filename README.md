@@ -1,106 +1,79 @@
-# 🐍 Snake Game – Full Stack Ruby Web App
+# 🐍 Snake Game – Full-Stack Ruby Web App
 
 A complete **Snake** game engineered in Ruby and deployed as a full-stack web application.  
-Built with **Ruby OOP**, **Sinatra**, **Puma**, ERB templates, JavaScript, and CSS.  
+Built with **Ruby OOP**, **Sinatra**, **Puma**, ERB templates, JavaScript, and CSS.
 
-🎮 **Play Live:** [https://snake-game1-w030.onrender.com](https://snake-game1-w030.onrender.com)
+🎮 **Play Live:** [snake-game1-w030.onrender.com](https://snake-game1-w030.onrender.com)
 
 ---
 
 ## 📌 Overview
-This project transforms a classic terminal game into a **full-stack product**:
-- Backend logic written in Ruby with clear object-oriented design.
-- Frontend rendered with ERB → HTML, CSS, and JavaScript.
-- Sinatra serves pages and assets.
-- Puma handles HTTP requests in production.
-- Hosted and continuously deployed with Render.
+This project takes the classic terminal Snake game and turns it into a **production-ready web app**:
+
+- Backend logic written in Ruby with clear object-oriented design.  
+- Frontend built with ERB → HTML, CSS, and JavaScript.  
+- Sinatra serves pages and assets.  
+- Puma handles HTTP requests in production.  
+- Deployed continuously via Render.
 
 ---
 
-## 🧩 Architecture & Files
-| File | Role |
-|------|------|
-| `app.rb` | Sinatra entry point; sets `views` & `public_folder`, defines routes |
-| `game.rb` | Central controller; connects board, snake, and food; runs the loop |
-| `board.rb` | Manages grid, rendering, wall collisions |
+## 🧩 Architecture
+
+| File | Purpose |
+|------|---------|
+| `app.rb` | Sinatra entry point (sets `views` & `public_folder`, defines routes) |
+| `game.rb` | Connects board, snake, and food; runs the loop |
+| `board.rb` | Manages grid, rendering, and wall collisions |
 | `snake.rb` | Handles movement, direction, growth, and self-collision |
-| `food.rb` | Spawns food at random positions and ensures no overlap |
-| `run.rb` | Terminal entry point for testing the game loop |
-| `test_snake.rb` | Playground for testing methods before running full app |
-| `snake_web/index.erb` | HTML template rendered via ERB |
+| `food.rb` | Spawns food at random positions |
+| `run.rb` | CLI entry for testing the game loop |
+| `test_snake.rb` | Scratch file for experimenting with methods |
+| `snake_web/index.erb` | HTML template rendered by ERB |
 | `snake_web/style.css` | Styles for the game board and UI |
-| `snake_web/script.js` | Handles keyboard input and draws to the canvas |
+| `snake_web/script.js` | Listens to keyboard input, draws canvas, fetches quotes |
 
 ---
 
 ## 🧠 Game Logic
-- Arrow keys trigger movement via a `DELTAS` hash mapping directions → x/y vectors.
-- Snake segments stored in an array; new head added each tick.
-- Tail removed unless snake is in growth mode.
-- Collisions detected with walls, food, or itself.
-- Food respawns randomly after being eaten.
+
+- Arrow keys trigger movement via a `DELTAS` hash (direction → x/y vector).  
+- Snake segments stored in an array; new head added each tick.  
+- Tail removed unless in growth mode.  
+- Collisions handled for walls, food, and self.  
+- Food respawns at random coordinates after being eaten.
 
 ---
 
 ## 🎨 Frontend
-- **ERB** converts Ruby variables into HTML.
-- **HTML + CSS** structure and style the board, score, and controls.
-- **JavaScript** listens to key events, updates canvas, and syncs with Ruby state.
+
+- **ERB** templates render Ruby variables into HTML.  
+- **HTML + CSS** style the board, score, controls, and API quotes.  
+- **JavaScript** updates the canvas in real time and handles API calls.
 
 ---
 
 ## 🛠️ Backend
-- **Ruby OOP** defines core entities: `Game`, `Board`, `Snake`, `Food`.
-- **Sinatra** acts as the kitchen 🥘 — serving HTML, JS, and CSS to users.
-- **Puma** is the waiter 🦁 — efficiently handling incoming HTTP requests.
+
+- Core entities (`Game`, `Board`, `Snake`, `Food`) modeled with **Ruby OOP**.  
+- **Sinatra** serves routes and assets.  
+- **Puma** runs the app in production.
 
 ---
 
-## ⚙️ Configuration
-- `Gemfile` specifies dependencies: `sinatra`, `puma`, `rackup`, `rack`.
-- `config.ru` (optional) or start command configures Puma to run Sinatra.
-- Render build command: `bundle install`
-- Start command: `bundle exec ruby app.rb -p $PORT`
+## 🌐 API Integration
+
+- Uses [ZenQuotes API](https://zenquotes.io) (or [Quotable](https://api.quotable.io/random)) for inspirational quotes.  
+- Quote is fetched with `Net::HTTP` in Ruby, returned as JSON, and rendered beside the game.
 
 ---
 
-## 🚀 Deployment (Render)
-1. Push code to [GitHub Repo](https://github.com/ZsmithWork777/Snake_game).
-2. Connect repository to [Render](https://render.com).
-3. Add a **Web Service**, select Ruby, and set:
-   - **Build Command:** `bundle install`
-   - **Start Command:** `bundle exec ruby app.rb -p $PORT`
-4. Deploy → app runs on [https://snake-game1-w030.onrender.com](https://snake-game1-w030.onrender.com).
+## ⚙️ Setup & Deployment
 
----
-
-## 🔗 Live Links
-- ▶️ [Play the Game](https://snake-game1-w030.onrender.com)  
-- 📂 [Source Code on GitHub](https://github.com/ZsmithWork777/Snake_game)  
-- ☁️ [Render Dashboard](https://dashboard.render.com/)
-
----
-
-## 📌 Highlights
-- Full-stack implementation (Ruby → browser).
-- Real-time rendering of a grid-based game.
-- Clean object-oriented structure.
-- Uses math, arrays, and collision detection for gameplay.
-- Deployment pipeline from local dev → GitHub → Render.
-
----
-
-## 🧑‍💻 Author
-**Zachary Smith**  
-Software Developer | IT Support Specialist  
-> Built as part of my **#100DaysOfCode** challenge to learn full-stack development.
-
----
-
-### Tech Stack
-- **Language:** Ruby
-- **Framework:** Sinatra
-- **Server:** Puma
-- **Templating:** ERB
-- **Frontend:** HTML, CSS, JavaScript
-- **Hosting:** Render
+### Local Development
+```bash
+git clone https://github.com/ZsmithWork777/Snake_game.git
+cd Snake_game
+bundle install
+ruby app.rb
+# visit http://localhost:4567
