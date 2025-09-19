@@ -1,29 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game (WEB)</title>
 </head>
 <body>
- <h1>Snake Game (WEB)</h1>
+  <h1>Snake Game (WEB)</h1>
 
-<div id="game-container">
-  <div id="score">Score: 0</div>
-  <canvas id="board" width="400" height="400"></canvas>
-  <button id="RestartBtn">Restart</button>
-  <button id="QuoteBtn">Get Quote</button>
-</div>
-
-<% if @quote %>
-  <div class="quote-box">
-    <p><%= @quote %></p>
+  <div id="game-container">
+    <div id="score">Score: 0</div>
+    <canvas id="board" width="400" height="400"></canvas>
+    <button id="RestartBtn">Restart</button>
+    <button id="QuoteBtn">Get Quote</button>
   </div>
-<% end %>
 
-<script src="script.js"></script>
+  <div id="quote-box" class="quote-box"></div>
+
+  <script src="script.js"></script>
 </body>
-</html> 
-
-
+</html>
